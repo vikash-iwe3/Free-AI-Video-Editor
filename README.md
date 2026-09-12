@@ -2,7 +2,7 @@
 
 # 🎬 Free AI Video Editor
 
-**Local, CPU-only web video studio — text, images, clips & voice become finished MP4s.**
+**A free, local, CPU-only AI video editor by Vikash Nayak — text, images, clips & voice become finished MP4s.**
 
 No GPU · no CUDA · no paid APIs · nothing leaves your machine except the free TTS call.
 
@@ -10,7 +10,9 @@ No GPU · no CUDA · no paid APIs · nothing leaves your machine except the free
 [![License: MIT](https://img.shields.io/badge/License-MIT-7df9c9.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](#-quick-start)
-[![Author](https://img.shields.io/badge/built%20by-Vikash-7df9c9.svg)](https://github.com/vikash-iwe3)
+[![Author](https://img.shields.io/badge/created%20by-Vikash%20Nayak-7df9c9.svg)](https://www.linkedin.com/in/vikash-iwe3/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vikash-iwe3/)
+[![GitHub](https://img.shields.io/badge/GitHub-vikash--iwe3-181717?logo=github)](https://github.com/vikash-iwe3)
 
 ![Free AI Video Editor — Text to video](docs/screenshot.png)
 
@@ -236,14 +238,24 @@ CI runs the same suite on **ubuntu + windows** for **py3.10 + py3.12**
 
 ## Credits
 
-**Designed, built and maintained by [Vikash](https://github.com/vikash-iwe3).**
-Copyright © 2026 Vikash — released under the MIT License.
+**Designed, built and maintained by Vikash Nayak.**
+
+<table>
+  <tr>
+    <td width="72"><a href="https://github.com/vikash-iwe3"><img src="https://github.com/github.png" width="64" alt="Vikash Nayak on GitHub"/></a></td>
+    <td><b>Vikash Nayak</b> — creator of Free AI Video Editor.<br/>
+      👤 GitHub: <a href="https://github.com/vikash-iwe3">github.com/vikash-iwe3</a> ·
+      💼 LinkedIn: <a href="https://www.linkedin.com/in/vikash-iwe3/">linkedin.com/in/vikash-iwe3</a></td>
+  </tr>
+</table>
+
+Copyright © 2026 **Vikash Nayak** — released under the MIT License.
 
 ## Contributing / License / Security
 
 - PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) (tests required for
   pipeline changes).
-- [CHANGELOG.md](CHANGELOG.md) · [SECURITY.md](SECURITY.md) · [MIT © 2026](LICENSE)
+- [CHANGELOG.md](CHANGELOG.md) · [SECURITY.md](SECURITY.md) · [MIT © 2026 Vikash Nayak](LICENSE)
 
 *Built with [ffmpeg](https://ffmpeg.org/), [Pillow](https://python-pillow.org/),
 [Flask](https://flask.palletsprojects.com/) and

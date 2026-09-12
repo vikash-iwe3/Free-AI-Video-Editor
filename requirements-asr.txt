@@ -1,0 +1,2 @@
+# Optional - only needed for auto speech-to-caption in Voice -> Video.
+faster-whisper>=1.0.0

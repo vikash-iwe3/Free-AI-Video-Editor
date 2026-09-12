@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free AI Video Editor — Local Video Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%236d7dff'/%3E%3Cpath d='M9 7.5v9l7.5-4.5z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+      <rect width="24" height="24" rx="6" fill="var(--accent)"/>
+      <path d="M9 7.5v9l7.5-4.5z" fill="#fff"/>
+    </svg>
+    <span class="name">Free AI Video Editor</span>
+    <span class="divider"></span>
+    <span class="ver" id="versionTag">v1.0.0</span>
+  </div>
+  <div class="top-actions">
+    <span class="chip" id="enginePill"><i class="dot"></i><span>checking engine…</span></span>
+    <a class="quiet-link" href="https://github.com/vikash-iwe3/Free-AI-Video-Editor" target="_blank" rel="noopener">Docs ↗</a>
+  </div>
+</header>
+
+<main>
+  <!-- ======================= EDITOR ======================= -->
+  <section class="editor">
+    <nav class="tabs" role="tablist" aria-label="Creation mode">
+      <button class="tab active" data-tab="text" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h10"/></svg>Text</button>
+      <button class="tab" data-tab="images" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M5 19l5.5-6 3.5 4 2.5-2.5L21 19"/></svg>Images</button>
+      <button class="tab" data-tab="clips" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>Clips</button>
+      <button class="tab" data-tab="voice" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Voice</button>
+    </nav>
+
+    <!-- ============ TEXT TO VIDEO ============ -->
+    <div class="panel active" id="panel-text">
+      <div class="panel-head">
+        <h1>Text to video</h1>
+        <p>Scenes become animated slides with narration and burned-in captions.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Scenes</div>
+        <div id="scenes"></div>
+        <button class="add-row" id="addScene">＋ Add scene</button>
+      </div>
+
+      <div class="field-grid three">
+        <label class="field">Voice <select id="textVoice"></select></label>
+        <label class="field">Pace <select id="textRate"><option>+0%</option><option>+8%</option><option>+15%</option><option>-8%</option></select></label>
+        <label class="field">Output <select id="textRes"><option>1080p</option><option>720p</option><option>480p</option></select></label>
+      </div>
+
+      <div class="dropzone compact" id="textBgmDz">Background music — optional</div>
+      <div class="filechip" id="textBgmNote"></div>
+
+      <button class="primary" id="runText">Render video</button>
+    </div>
+
+    <!-- ============ IMAGES TO VIDEO ============ -->
+    <div class="panel" id="panel-images">
+      <div class="panel-head">
+        <h1>Images to video</h1>
+        <p>A montage with motion. Captions are spoken by the voice and burned into the frame.</p>
+      </div>
+
+      <div class="dropzone" id="imgDz">
+        <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+        Drop images here — or click to choose
+      </div>
+      <div id="imgList"></div>
+
+      <div class="field-grid three">
+        <label class="field">Voice <select id="imgVoice"></select></label>
+        <label class="field">Transition
+          <select id="imgTrans"><option value="dissolve">Dissolve</option><option value="fade">Fade</option><option value="cut">Cut</option></select></label>
+        <label class="field">Output <select id="imgRes"><option>1080p</option><option>720p</option><option>480p</option></select></label>
+      </div>
+
+      <label class="switch"><input type="checkbox" id="imgNarrate" checked>
+        <span class="track"></span><span class="sw-label">Narrate captions with AI voice</span></label>
+
+      <div class="dropzone compact" id="imgBgmDz">Background music — optional</div>
+      <button class="primary" id="runImages">Render video</button>
+    </div>
+
+    <!-- ============ CLIPS TO VIDEO ============ -->
+    <div class="panel" id="panel-clips">
+      <div class="panel-head">
+        <h1>Clips to video</h1>
+        <p>Trim, reorder and join clips. Everything is normalized to one canvas.</p>
+      </div>
+
+      <div class="dropzone" id="clipDz">
+        <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+        Drop video clips here — or click to choose
+      </div>
+      <div id="clipList"></div>
+
+      <div class="field-grid three">
+        <label class="field">Transition
+          <select id="clipTrans"><option value="dissolve">Dissolve</option><option value="fade">Fade</option><option value="cut">Cut</option></select></label>
+        <label class="field">Transition dur <input type="number" id="clipTransDur" value="0.5" min="0.1" max="2" step="0.1"></label>
+        <label class="field">Output <select id="clipRes"><option>1080p</option><option>720p</option><option>480p</option></select></label>
+      </div>
+
+      <div class="check-row">
+        <label class="switch"><input type="checkbox" id="clipAudio" checked><span class="track"></span><span class="sw-label">Keep clip audio</span></label>
+        <label class="switch"><input type="checkbox" id="clipFade"><span class="track"></span><span class="sw-label">Fade out at end</span></label>
+      </div>
+
+      <div class="dropzone compact" id="clipBgmDz">Background music — optional</div>
+      <button class="primary" id="runClips">Render video</button>
+    </div>
+
+    <!-- ============ VOICE TO VIDEO ============ -->
+    <div class="panel" id="panel-voice">
+      <div class="panel-head">
+        <h1>Voice to video</h1>
+        <p>A voice track (or typed narration) with visuals that fit the audio.</p>
+      </div>
+
+      <div class="dropzone" id="audDz">
+        <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        Drop one audio file — mp3 · wav · m4a
+      </div>
+      <div class="filechip" id="audNote"></div>
+
+      <details class="section"><summary>…or type narration</summary>
+        <textarea id="audText" rows="3" placeholder="What should be spoken…"></textarea>
+        <label class="field">Voice <select id="audVoice"></select></label>
+      </details>
+
+      <div class="dropzone compact" id="audImgDz">Images — optional, split across the audio</div>
+      <div id="audImgList"></div>
+
+      <details class="section"><summary>Captions</summary>
+        <label class="field">Source
+          <select id="capMode">
+            <option value="off">None</option>
+            <option value="auto">Speech-to-text (offline model, one-time download)</option>
+            <option value="lines">My lines, spread evenly</option>
+          </select>
+        </label>
+        <textarea id="capLines" rows="4" placeholder="One caption per line…"></textarea>
+      </details>
+
+      <div class="field-grid two">
+        <label class="field">Title <input id="audTitle" placeholder="Used when no images"></label>
+        <label class="field">Output <select id="audRes"><option>1080p</option><option>720p</option><option>480p</option></select></label>
+      </div>
+
+      <div class="dropzone compact" id="audBgmDz">Background music — optional</div>
+      <button class="primary" id="runVoice">Render video</button>
+    </div>
+  </section>
+
+  <!-- ======================= QUEUE ======================= -->
+  <aside class="queue">
+    <h2>Queue</h2>
+    <div id="jobList"><div class="empty">Nothing rendered yet.</div></div>
+  </aside>
+</main>
+
+<footer class="credits">
+  <span>© 2026 <a href="https://github.com/vikash-iwe3">Vikash</a></span>
+  <span class="fsep">·</span>
+  <span>MIT License</span>
+  <span class="fsep">·</span>
+  <span>ffmpeg · Pillow · edge-tts — local, no GPU</span>
+</footer>
+
+<template id="tplScene">
+  <div class="scene">
+    <span class="scene-n"></span>
+    <input class="sHead" placeholder="Heading">
+    <textarea class="sBody" rows="2" placeholder="Body text shown on the slide"></textarea>
+    <input class="sNarr" placeholder="Spoken narration — defaults to heading + body">
+    <button class="scene-x" title="Remove scene">✕</button>
+  </div>
+</template>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

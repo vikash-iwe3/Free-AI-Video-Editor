@@ -1,0 +1,231 @@
+/* Free AI Video Editor — minimal professional UI */
+
+:root{
+  --bg:#0d0e11;
+  --surface:#14161a;
+  --surface-2:#191c21;
+  --line:#262931;
+  --line-soft:#20232a;
+  --ink:#e8eaee;
+  --ink-2:#a7abb4;
+  --ink-3:#6e727c;
+  --accent:#6d7dff;
+  --accent-dim:#5563d6;
+  --ok:#3ecf8e;
+  --warn:#e5b567;
+  --err:#e56969;
+  --radius:10px;
+  --font:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font:14px/1.55 var(--font);
+  -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column; min-height:100vh;
+}
+
+/* ---------------- top bar ---------------- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 28px; height:56px;
+  border-bottom:1px solid var(--line-soft);
+  background:var(--surface);
+  position:sticky; top:0; z-index:20;
+}
+.brand{display:flex; align-items:center; gap:12px}
+.brand .name{font-weight:600; font-size:15px; letter-spacing:.2px}
+.brand .divider{width:1px; height:16px; background:var(--line)}
+.brand .ver{color:var(--ink-3); font-size:12px}
+.top-actions{display:flex; align-items:center; gap:16px}
+.quiet-link{color:var(--ink-2); text-decoration:none; font-size:13px}
+.quiet-link:hover{color:var(--ink)}
+.chip{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:12px; color:var(--ink-2);
+  border:1px solid var(--line); border-radius:99px; padding:4px 11px;
+}
+.chip .dot{width:7px; height:7px; border-radius:50%; background:var(--ink-3)}
+.chip.ok{color:var(--ok); border-color:#1f4634}
+.chip.ok .dot{background:var(--ok)}
+.chip.bad{color:var(--err); border-color:#4d2727}
+.chip.bad .dot{background:var(--err)}
+
+/* ---------------- layout ---------------- */
+main{
+  flex:1; width:100%; max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:28px;
+  padding:28px;
+}
+
+/* ---------------- tabs ---------------- */
+.tabs{
+  display:flex; gap:4px; border-bottom:1px solid var(--line-soft);
+  margin-bottom:26px;
+}
+.tab{
+  display:inline-flex; align-items:center; gap:8px;
+  background:none; border:none; cursor:pointer;
+  color:var(--ink-3); font:inherit; font-size:14px;
+  padding:10px 16px 12px; margin-bottom:-1px;
+  border-bottom:2px solid transparent;
+}
+.tab svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.tab:hover{color:var(--ink-2)}
+.tab.active{color:var(--ink); border-bottom-color:var(--accent)}
+
+/* ---------------- panels ---------------- */
+.panel{display:none; animation:fade .18s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0; transform:translateY(3px)}to{opacity:1; transform:none}}
+.panel-head{margin-bottom:22px}
+.panel-head h1{margin:0 0 4px; font-size:20px; font-weight:600}
+.panel-head p{margin:0; color:var(--ink-2); font-size:13.5px}
+
+/* ---------------- cards & fields ---------------- */
+.card{
+  border:1px solid var(--line-soft); border-radius:var(--radius);
+  padding:16px 18px; margin-bottom:18px; background:var(--surface);
+}
+.card-label{
+  font-size:11px; font-weight:600; letter-spacing:.8px;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:12px;
+}
+.field-grid{display:grid; gap:14px; margin-bottom:18px}
+.field-grid.two{grid-template-columns:1fr 1fr}
+.field-grid.three{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex; flex-direction:column; gap:6px; font-size:11.5px;
+  font-weight:600; letter-spacing:.5px; text-transform:uppercase; color:var(--ink-3)}
+input,select,textarea{
+  background:var(--surface-2); border:1px solid var(--line);
+  color:var(--ink); border-radius:8px; padding:9px 11px;
+  font:inherit; font-size:14px; text-transform:none; letter-spacing:0;
+  width:100%; outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent-dim)}
+input::placeholder,textarea::placeholder{color:var(--ink-3)}
+textarea{resize:vertical}
+select{appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);
+  background-position:calc(100% - 16px) 55%,calc(100% - 11px) 55%;
+  background-size:5px 5px;background-repeat:no-repeat}
+
+/* ---------------- scenes ---------------- */
+.scene{position:relative; display:grid; gap:8px; padding:14px; margin-bottom:10px;
+  border:1px solid var(--line-soft); border-radius:8px; background:var(--surface-2)}
+.scene-n{position:absolute; top:-9px; left:12px; font-size:10.5px; font-weight:700;
+  letter-spacing:.6px; color:var(--ink-3); background:var(--surface);
+  border:1px solid var(--line-soft); border-radius:99px; padding:1px 9px}
+.scene .sHead{font-weight:600}
+.scene-x{position:absolute; top:10px; right:10px; width:24px; height:24px;
+  border-radius:6px; border:none; background:none; color:var(--ink-3);
+  cursor:pointer; font-size:12px}
+.scene-x:hover{color:var(--err); background:#2a1d1f}
+.add-row{width:100%; padding:10px; border:1px dashed var(--line); border-radius:8px;
+  background:none; color:var(--ink-2); font:inherit; font-size:13.5px; cursor:pointer}
+.add-row:hover{border-color:var(--accent-dim); color:var(--ink)}
+
+/* ---------------- dropzones ---------------- */
+.dropzone{
+  border:1px dashed var(--line); border-radius:var(--radius);
+  padding:26px 16px; text-align:center; cursor:pointer;
+  color:var(--ink-2); font-size:13.5px; margin-bottom:14px;
+  background:var(--surface); transition:border-color .15s, color .15s;
+}
+.dropzone svg{display:block; margin:0 auto 8px; width:20px; height:20px;
+  fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; color:var(--ink-3)}
+.dropzone:hover,.dropzone.over{border-color:var(--accent-dim); color:var(--ink)}
+.dropzone.compact{padding:12px; font-size:13px; margin-bottom:14px}
+.filechip{font-size:13px; color:var(--accent); margin:-6px 0 12px}
+
+/* ---------------- asset rows (images/clips) ---------------- */
+.assetRow{
+  display:flex; align-items:center; gap:10px;
+  border:1px solid var(--line-soft); border-radius:8px;
+  background:var(--surface); padding:8px 12px; margin-bottom:8px; font-size:13px;
+}
+.assetRow .nm{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.assetRow .cap{flex:2}
+.assetRow label{display:flex; align-items:center; gap:6px; color:var(--ink-3); font-size:11.5px;
+  text-transform:uppercase; letter-spacing:.5px; font-weight:600}
+.assetRow label input{width:74px; padding:6px 8px; font-size:13px}
+.assetRow .mv{display:flex; flex-direction:column; gap:2px}
+.assetRow .mv button{width:22px; height:15px; line-height:1; padding:0; border-radius:5px;
+  background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); cursor:pointer; font-size:8px}
+.assetRow .mv button:hover{color:var(--ink); border-color:var(--accent-dim)}
+.assetRow .x{background:none; border:none; color:var(--ink-3); cursor:pointer; font-size:13px; padding:2px 6px}
+.assetRow .x:hover{color:var(--err)}
+
+/* ---------------- switches ---------------- */
+.switch{display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+  font-size:13.5px; color:var(--ink-2); margin-bottom:14px; user-select:none}
+.switch input{display:none}
+.switch .track{width:34px; height:20px; border-radius:99px; background:var(--line);
+  position:relative; transition:background .15s; flex:none}
+.switch .track::after{content:""; position:absolute; top:3px; left:3px; width:14px; height:14px;
+  border-radius:50%; background:var(--ink-2); transition:.15s}
+.switch input:checked + .track{background:var(--accent)}
+.switch input:checked + .track::after{left:17px; background:#fff}
+.switch:hover .sw-label{color:var(--ink)}
+.check-row{display:flex; gap:26px}
+
+/* ---------------- details sections ---------------- */
+details.section{border:1px solid var(--line-soft); border-radius:var(--radius);
+  background:var(--surface); padding:12px 16px; margin-bottom:14px}
+details.section summary{cursor:pointer; color:var(--ink-2); font-size:13.5px; list-style:none; outline:none}
+details.section summary::-webkit-details-marker{display:none}
+details.section summary::before{content:"›"; display:inline-block; margin-right:8px;
+  transition:transform .15s; color:var(--ink-3)}
+details.section[open] summary::before{transform:rotate(90deg)}
+details.section[open] summary{margin-bottom:12px}
+details.section .field{margin-top:10px}
+
+/* ---------------- buttons ---------------- */
+button.primary{
+  width:100%; margin-top:6px; padding:12px; border:none; border-radius:var(--radius);
+  background:var(--accent); color:#fff; font:inherit; font-size:14.5px; font-weight:600;
+  cursor:pointer; letter-spacing:.2px; transition:background .15s, opacity .15s;
+}
+button.primary:hover{background:var(--accent-dim)}
+button.primary:disabled{opacity:.45; cursor:progress}
+
+/* ---------------- queue ---------------- */
+.queue h2{font-size:11px; font-weight:700; letter-spacing:.9px; text-transform:uppercase;
+  color:var(--ink-3); margin:2px 0 14px}
+.job{border:1px solid var(--line-soft); border-radius:var(--radius); background:var(--surface);
+  padding:13px 14px; margin-bottom:10px; font-size:13px}
+.job .jt{display:flex; align-items:center; gap:8px; margin-bottom:8px}
+.job .st-dot{width:7px; height:7px; border-radius:50%; background:var(--ink-3); flex:none}
+.job .st-dot.running{background:var(--accent); animation:pulse 1.2s infinite}
+.job .st-dot.done{background:var(--ok)}
+.job .st-dot.error{background:var(--err)}
+@keyframes pulse{50%{opacity:.35}}
+.job .kind{font-weight:600; font-size:13px}
+.job .ago{margin-left:auto; color:var(--ink-3); font-size:11.5px}
+.job .bar{height:3px; border-radius:99px; background:var(--line-soft); overflow:hidden; margin:8px 0}
+.job .bar i{display:block; height:100%; background:var(--accent); transition:width .6s}
+.job .stage{color:var(--ink-2); font-size:12px}
+.job .err{color:var(--err); font-size:12px; white-space:pre-wrap; max-height:110px; overflow:auto;
+  background:#241a1a; border:1px solid #3d2424; border-radius:7px; padding:8px 10px; margin-top:8px}
+.job .acts{display:flex; gap:8px; margin-top:9px}
+.job .acts a,.job .acts button{font-size:12.5px; padding:6px 11px; border-radius:7px;
+  background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2);
+  cursor:pointer; text-decoration:none}
+.job .acts a:hover,.job .acts button:hover{color:var(--ink); border-color:var(--accent-dim)}
+.job video{width:100%; border-radius:8px; margin-top:10px; background:#000; display:block}
+.empty{color:var(--ink-3); font-size:13px; padding:6px 2px}
+
+/* ---------------- footer ---------------- */
+.credits{text-align:center; color:var(--ink-3); font-size:12px;
+  padding:16px; border-top:1px solid var(--line-soft); margin-top:8px}
+.credits a{color:var(--ink-2); text-decoration:none}
+.credits a:hover{color:var(--accent)}
+.fsep{margin:0 6px; color:var(--line)}
+
+/* ---------------- responsive ---------------- */
+@media (max-width:980px){
+  main{grid-template-columns:1fr}
+  .queue{order:2}
+  .field-grid.three,.field-grid.two{grid-template-columns:1fr}
+}

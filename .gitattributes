@@ -1,0 +1,12 @@
+# Normalise line endings so Python files behave the same on every OS
+* text=auto eol=lf
+
+*.bat  text eol=crlf
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.mp4  binary
+*.mp3  binary
+*.wav  binary
+*.ttc  binary
+*.ttf  binary

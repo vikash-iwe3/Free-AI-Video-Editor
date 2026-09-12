@@ -1,0 +1,21 @@
+[project]
+name = "free-ai-video-editor"
+version = "1.1.0"
+description = "Local, CPU-only web video studio: text/images/clips/voice -> MP4 (Flask + ffmpeg + edge-tts)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Vikash", url = "https://github.com/vikash-iwe3" }]
+dependencies = [
+  "flask>=3.0",
+  "edge-tts>=7.0",
+  "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+asr = ["faster-whisper>=1.0.0"]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

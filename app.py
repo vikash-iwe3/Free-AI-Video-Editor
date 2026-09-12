@@ -18,7 +18,11 @@ from core import jobs, tts, util
 from core.util import UPLOADS, OUTPUTS, JOBS, run, probe_video, which_ffmpeg, safe_slug, ensure_fonts
 
 __version__ = "1.1.0"
-__author__ = "Vikash"
+__author__ = "Vikash Nayak"
+__author_links__ = {
+    "github": "https://github.com/vikash-iwe3",
+    "linkedin": "https://www.linkedin.com/in/vikash-iwe3/",
+}
 
 ensure_fonts()
 app = Flask(__name__, static_folder="static", static_url_path="/static")
@@ -59,6 +63,7 @@ def api_meta():
     return jsonify({
         "version": __version__,
         "author": __author__,
+        "author_links": __author_links__,
         "home": "https://github.com/vikash-iwe3/Free-AI-Video-Editor",
         "voices": tts.VOICES,
         "ffmpeg": ffok,

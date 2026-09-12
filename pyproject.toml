@@ -5,7 +5,8 @@ description = "Local, CPU-only web video studio: text/images/clips/voice -> MP4 
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Vikash", url = "https://github.com/vikash-iwe3" }]
+authors = [{ name = "Vikash Nayak", url = "https://www.linkedin.com/in/vikash-iwe3/" }]
+urls = { homepage = "https://github.com/vikash-iwe3/Free-AI-Video-Editor", repository = "https://github.com/vikash-iwe3/Free-AI-Video-Editor" }
 dependencies = [
   "flask>=3.0",
   "edge-tts>=7.0",

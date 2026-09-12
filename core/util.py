@@ -158,9 +158,17 @@ def font_rel(text: str, bold: bool = False, dst_dir: Path | None = None) -> str:
     forward slashes and no colon, safe for filter strings."""
     src = font_path(text, bold)
     if src is None:
+        sc = script_of(text)
+        hint = {
+            "deva": "sudo apt install fonts-noto-core   (Noto Sans Devanagari)",
+            "cjk": "sudo apt install fonts-noto-cjk",
+            "latin": "sudo apt install fonts-dejavu",
+        }.get(sc, "")
         raise RuntimeError(
-            "no usable system font found for captions; install a font "
-            "(e.g. 'sudo apt install fonts-dejavu' or keep Arial/Nirmala)")
+            f"no font covering script '{sc}' found; looked for "
+            f"{', '.join(_FONT_CANDIDATES[sc])} under: "
+            f"{STATIC_FONTS}, " + ", ".join(str(d) for d in _OS_FONT_DIRS if d.is_dir())
+            + (f". Fix: {hint}" if hint else ""))
     target_dir = dst_dir or STATIC_FONTS
     target_dir.mkdir(parents=True, exist_ok=True)
     dst = target_dir / src.name
